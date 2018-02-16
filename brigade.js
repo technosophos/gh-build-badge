@@ -19,9 +19,8 @@ events.on("helm-delete", (e, p) => {
 
 events.on("webhook", (e, p) => {
   console.log(e.provider)
-  var slack = new Job("slack-notify", "technosophos/slack-notify:latest", ["/slack-notify"])
   var m = "Installing Helm chart"
-  newSlack(m, p, e)
+  var slack = newSlack(m, p, e)
   console.log(`installing ${chartName} into ${relName}`)
 
   var helm = new Job("helm", "lachlanevenson/k8s-helm:v2.6.1");
