@@ -1,4 +1,5 @@
 # GitHub Build Badges
+![Build Status](http://badges.technosophos.me/v1/github/build/technosophos/gh-build-badge/badge.svg)
 
 This is a simple server for displaying build badges on GitHub projects.
 
