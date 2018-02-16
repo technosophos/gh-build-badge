@@ -12,7 +12,7 @@ import (
 
 var (
 	githubToken = ""
-	lastStatus  = "unknown"
+	lastStatus  = map[string]string{}
 )
 
 func main() {
@@ -33,11 +33,15 @@ func badge(c *gin.Context) {
 	owner := c.Param("owner")
 	project := c.Param("project")
 	branch := c.DefaultQuery("branch", "master")
+	key := fmt.Sprintf("%s/%s/%s", owner, project, branch)
 
 	status, err := ghStatus(owner, project, branch)
 	if err != nil {
 		if _, ok := err.(*github.RateLimitError); ok {
-			status = lastStatus
+			status, ok = lastStatus[key]
+			if !ok {
+				status = "Unknown"
+			}
 		} else {
 			fmt.Printf("failed ghStatus: %s", err)
 			svg(c, fmt.Sprintf(other, "Unknown", "Unknown"))
@@ -46,7 +50,7 @@ func badge(c *gin.Context) {
 	}
 
 	// Trivial rate limit protection
-	lastStatus = status
+	lastStatus[key] = status
 
 	switch status {
 	case "success":
