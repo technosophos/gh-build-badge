@@ -72,7 +72,7 @@ events.on("ReplicaSet:SuccessfulCreate", (e, p) => {
   trello.run()
 })
 
-events.on("ReplicaSet:ScalingReplicaSet", (e, p) => {
+events.on("ReplicaSet:SuccessfulDelete", (e, p) => {
   var trello = new Job("trello", "technosophos/trello-cli:latest")
   trello.env = {
     APIKEY: p.secrets.trelloKey,
