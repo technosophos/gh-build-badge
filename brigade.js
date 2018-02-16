@@ -8,6 +8,15 @@ events.on("exec", (e, p) => {
   console.log("this space intentionally left blank")
 });
 
+events.on("helm-delete", (e, p) => {
+  var helm = new Job("helm", "lachlanevenson/k8s-helm:v2.6.1");
+  helm.tasks = [
+    "helm init --client-only",
+    `helm delete --purge ${relName}`
+  ]
+  helm.run()
+})
+
 events.on("webhook", (e, p) => {
   console.log(e.provider)
   var slack = new Job("slack-notify", "technosophos/slack-notify:latest", ["/slack-notify"])
