@@ -66,7 +66,7 @@ events.on("ReplicaSet:SuccessfulCreate", (e, p) => {
   trello.tasks = [
     "env2creds",
     "trello refresh",
-    `trello add-card ${relName} ${relName} -b Ionic -l New`
+    `trello add-card "${relName}" "${relName}" -b Ionic -l New`
   ]
 
   trello.run()
@@ -81,7 +81,7 @@ events.on("ReplicaSet:SuccessfulDelete", (e, p) => {
   trello.tasks = [
     "env2creds",
     "trello refresh",
-    `trello delete-card ${relName} -b Ionic`
+    `trello delete-card "${relName}" -b Ionic`
   ]
 
   trello.run()
